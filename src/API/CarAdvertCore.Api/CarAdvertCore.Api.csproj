@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="10.0.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\CarAdvertCore.Application\CarAdvertCore.Application.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\CarAdvertCore.Persistence\CarAdvertCore.Persistence.csproj" />
+  </ItemGroup>
+
+</Project>
