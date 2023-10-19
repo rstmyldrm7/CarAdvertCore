@@ -10,21 +10,21 @@ namespace CarAdvertCore.Application.Features.Tasks.Queries.QueryModels.Response
 {
     public class GetAdvertByIdQueryResponse
     {
-        public long id { get; set; }
-        public long memberId { get; set; }
-        public int cityId { get; set; }
+        public string id { get; set; }
+        public string memberId { get; set; }
+        public string cityId { get; set; }
         public string cityName { get; set; }
-        public int townID { get; set; }
+        public string townID { get; set; }
         public string townName { get; set; }
-        public int modelId { get; set; }
+        public string modelId { get; set; }
         public string modelName { get; set; }
-        public int year { get; set; }
-        public decimal price { get; set; }
+        public string year { get; set; }
+        public string price { get; set; }
         public string title { get; set; }
         public string date { get; set; }
-        public int categoryId { get; set; }
+        public string categoryId { get; set; }
         public string category { get; set; }
-        public long km { get; set; }
+        public string km { get; set; }
         public string color { get; set; }
         public string gear { get; set; }
         public string fuel { get; set; }

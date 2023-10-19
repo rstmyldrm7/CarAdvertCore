@@ -17,21 +17,21 @@ namespace CarAdvertCore.Application.Assembler.Concrete
         {
             return new GetAdvertByIdQueryResponse()
             {
-                id= advert.id,
-                memberId = advert.memberId,
-                cityId = advert.cityId,
-                cityName = advert.cityName,
-                townID = advert.townID,
-                townName = advert.townName,
-                modelId = advert.modelId,
+                id = advert.id.ToString(),
+                memberId = advert.memberId.ToString(),
+                cityId = advert.cityId.ToString(),
+                cityName = advert.cityName.ToString(),
+                townID = advert.townID.ToString(),
+                townName = advert.townName.ToString(),
+                modelId = advert.modelId.ToString(),
                 modelName = advert.modelName,
-                year = advert.year,
-                price = advert.price,
+                year = advert.year.ToString(),
+                price = advert.price.ToString(),
                 title = advert.title,
                 date = advert.date.ToString("yyyy-MM-dd HH-mm-ss"),
-                categoryId = advert.categoryId,
-                category = advert.category,
-                km = advert.km,
+                categoryId = advert.categoryId.ToString(),
+                category = advert.category.ToString(),
+                km = advert.km.ToString(),
                 color = advert.color,
                 gear = EnumHelper<GearType>.GetDisplayValue(advert.gearType),
                 fuel = EnumHelper<FuelType>.GetDisplayValue(advert.fuelType),
@@ -40,6 +40,32 @@ namespace CarAdvertCore.Application.Assembler.Concrete
                 userInfo = advert.userInfo,
                 userPhone = advert.userPhone,
                 text = advert.text
+            };
+        }
+
+        public GetAllAdvertsQueryResponse MapToGetAllAdvertsQueryResponse(List<Adverts> adverts, int pageSize, int totalCount)
+        {
+            List<AdvertsDto> advertsDtoList = adverts.Select(advert => new AdvertsDto
+            {
+                id = advert.id.ToString(),
+                modelName = advert.modelName,
+                category = advert.category,
+                year = advert.year.ToString(),
+                price = advert.price.ToString(),
+                title = advert.title,
+                date = advert.date.ToString("yyyy-MM-dd HH-mm-ss"),
+                km = advert.km.ToString(),
+                color = advert.color,
+                gear = EnumHelper<GearType>.GetDisplayValue(advert.gearType),
+                fuel = EnumHelper<FuelType>.GetDisplayValue(advert.fuelType),
+                firstPhoto = advert.firstPhoto
+            }).ToList();
+
+            return new GetAllAdvertsQueryResponse()
+            {
+                page = pageSize,
+                total = totalCount,
+                adverts = advertsDtoList
             };
         }
     }

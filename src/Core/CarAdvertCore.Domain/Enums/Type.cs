@@ -31,4 +31,17 @@ namespace CarAdvertCore.Domain.Enums
         [Display(Name = "Benzin")]
         Gasoline = 2
     }
+    public enum SortField
+    {
+        Price,
+        Year,
+        Km
+    }
+
+    public enum SortDirection
+    {
+        HighToLow,
+        LowToHigh
+    }
+
 }

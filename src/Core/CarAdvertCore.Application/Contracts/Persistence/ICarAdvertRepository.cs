@@ -8,5 +8,7 @@ namespace CarAdvertCore.Application.Contracts.Persistence
     public interface ICarAdvertRepository : IAsyncRepository<Adverts>
     {
         Task<Adverts> GetAdvertByIdAsync(long id);
+        Task<List<Adverts>> GetAllAdvertsByFiltersQuery(string sql, object parameters);
+        Task<int> GetAllAdvertsByFiltersCountQuery(string countSql, object parameters);
     }
 }

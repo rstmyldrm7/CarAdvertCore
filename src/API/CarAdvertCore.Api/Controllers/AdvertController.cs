@@ -27,5 +27,15 @@ namespace CarAdvertCore.Api.Controllers
             }
             return Ok(response);
         }
+        [HttpGet("all")]
+        public async Task<ActionResult<GetAllAdvertsQueryResponse>> GetAllAdverts([FromQuery] GetAllAdvertsQueryRequest request)
+        {
+            var response = await mediator.Send(request);
+            if (response == null)
+            {
+                return NoContent();
+            }
+            return Ok(response);
+        }
     }
 }
