@@ -5,7 +5,8 @@ using CarAdvertCore.Domain.Entities;
 
 namespace CarAdvertCore.Application.Contracts.Persistence
 {
-    public interface ICarAdvertRepository : IAsyncRepository<ToDo>
+    public interface ICarAdvertRepository : IAsyncRepository<Adverts>
     {
+        Task<Adverts> GetAdvertByIdAsync(long id);
     }
 }

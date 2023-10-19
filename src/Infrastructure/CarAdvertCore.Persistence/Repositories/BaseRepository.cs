@@ -7,6 +7,10 @@ using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Options;
 using Dapper;
 using static Dapper.SqlMapper;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using System.Data.Common;
+using System.Net.Mail;
+using CarAdvertCore.Domain.Entities;
 
 namespace CarAdvertCore.Persistence.Repositories
 {
@@ -18,7 +22,7 @@ namespace CarAdvertCore.Persistence.Repositories
 
         public BaseRepository()
         {
-            sqlcon = new SqlConnection("ConnectionString");
+            sqlcon = new SqlConnection("Server=(LocalDb)\\MSSQLLocalDb;Initial Catalog=CarAdvertCore;Integrated Security=True;\r\n");
         }
 
         public virtual async Task<T> AddAsync(T entity)
@@ -37,14 +41,6 @@ namespace CarAdvertCore.Persistence.Repositories
             await sqlcon.DeleteAsync<T>(entity);
         }
 
-        public Task<T> GetByIdAsync(Guid id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<IReadOnlyList<T>> ListAllAsync()
-        {
-            throw new NotImplementedException();
-        }
+       
     }
 }

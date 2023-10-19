@@ -16,7 +16,6 @@
   
   <ItemGroup>
     <Folder Include="Features\Tasks\Commands\" />
-    <Folder Include="Features\Tasks\Queries\" />
   </ItemGroup>
 
 </Project>
