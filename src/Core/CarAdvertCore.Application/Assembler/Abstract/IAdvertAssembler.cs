@@ -11,5 +11,6 @@ namespace CarAdvertCore.Application.Assembler.Abstract
     public interface IAdvertAssembler
     {
         GetAdvertByIdQueryResponse MapToGetAdvertByIdResponse(Adverts advert);
+        GetAllAdvertsQueryResponse MapToGetAllAdvertsQueryResponse(List<Adverts> advers,int pageSize, int totalCount);
     }
 }
