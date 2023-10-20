@@ -4,6 +4,7 @@ using CarAdvertCore.Application.Assembler.Concrete;
 using CarAdvertCore.Application.Contracts.Persistence;
 using CarAdvertCore.Application.Features.Tasks.Queries.QueryModels.Request;
 using CarAdvertCore.Application.Features.Tasks.Queries.QueryModels.Response;
+using CarAdvertCore.Application.Features.Tasks.Service.Abstract;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -19,10 +20,12 @@ namespace CarAdvertCore.Application.Features.Tasks.Queries.Handler
     {
         private readonly ICarAdvertRepository _carAdvertRepository;
         private readonly IAdvertAssembler _advertAssembler;
-        public GetAdvertByIdQueryHandler(ICarAdvertRepository carAdvertRepository, IAdvertAssembler advertAssembler)
+        private readonly IApacheService _apacheService;
+        public GetAdvertByIdQueryHandler(ICarAdvertRepository carAdvertRepository, IAdvertAssembler advertAssembler, IApacheService apacheService)
         {
             _carAdvertRepository = carAdvertRepository;
             _advertAssembler = advertAssembler;
+            _apacheService = apacheService;
         }
 
         public async Task<GetAdvertByIdQueryResponse> Handle(GetAdvertByIdQueryRequest request,
@@ -34,6 +37,10 @@ namespace CarAdvertCore.Application.Features.Tasks.Queries.Handler
             {
                 return null;
             }
+
+            #region KafkaSend
+            await _apacheService.MapToVisitEvent(advert, "0.0.0.0");
+            #endregion
 
             return _advertAssembler.MapToGetAdvertByIdResponse(advert);
         }

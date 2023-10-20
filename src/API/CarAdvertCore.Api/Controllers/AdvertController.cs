@@ -1,4 +1,6 @@
-﻿using CarAdvertCore.Application.Features.Tasks.Queries.QueryModels.Request;
+﻿using CarAdvertCore.Application.Features.Tasks.Commands.CommandModels.Request;
+using CarAdvertCore.Application.Features.Tasks.Commands.CommandModels.Response;
+using CarAdvertCore.Application.Features.Tasks.Queries.QueryModels.Request;
 using CarAdvertCore.Application.Features.Tasks.Queries.QueryModels.Response;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -36,6 +38,13 @@ namespace CarAdvertCore.Api.Controllers
                 return NoContent();
             }
             return Ok(response);
+        }
+
+        [HttpPost("visit")]
+        public async Task<ActionResult> CreateVisitRecord(CreateVisitRecordCommandRequest request)
+        {
+            var response = await mediator.Send(request);
+            return CreatedAtAction(nameof(CreateVisitRecord), new { }, null);
         }
     }
 }

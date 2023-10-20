@@ -68,7 +68,10 @@ namespace CarAdvertCore.Application.Features.Tasks.Queries.Handler
             
             sql += GetSortClause(request.Field, request.Direction);
             sql += " OFFSET @Offset ROWS FETCH NEXT @PageSize ROWS ONLY";
-
+            
+            request.PageSize = request.PageSize == 0 ? 10 : request.PageSize;
+            request.PageNumber = request.PageNumber == 0 ? 1 : request.PageNumber;
+            
             var parameters = new
             {
                 CategoryIds = request.filteringFields?.categoryId,

@@ -27,7 +27,7 @@ namespace CarAdvertCore.Persistence.Repositories
 
         public virtual async Task<T> AddAsync(T entity)
         {
-            await sqlcon.InsertAsync<T>(entity);
+            await sqlcon.InsertAsync<Guid,T>(entity);
             return entity;
         }
 
