@@ -14,7 +14,7 @@ namespace CarAdvertCore.Api
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-            .ConfigureServices((context, collection) => { collection.AddHostedService<KafkaProducerHostedService>(); })
+            .ConfigureServices((context, collection) => { collection.AddHostedService<KafkaConsumerHostedService>(); })
             .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();

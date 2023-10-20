@@ -6,6 +6,7 @@ using CarAdvertCore.Application.Features.Tasks.Queries.QueryModels.Request;
 using CarAdvertCore.Application.Features.Tasks.Queries.QueryModels.Response;
 using CarAdvertCore.Application.Features.Tasks.Service.Abstract;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,16 +22,20 @@ namespace CarAdvertCore.Application.Features.Tasks.Queries.Handler
         private readonly ICarAdvertRepository _carAdvertRepository;
         private readonly IAdvertAssembler _advertAssembler;
         private readonly IApacheService _apacheService;
-        public GetAdvertByIdQueryHandler(ICarAdvertRepository carAdvertRepository, IAdvertAssembler advertAssembler, IApacheService apacheService)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public GetAdvertByIdQueryHandler(ICarAdvertRepository carAdvertRepository, IAdvertAssembler advertAssembler, IApacheService apacheService, IHttpContextAccessor httpContextAccessor)
         {
             _carAdvertRepository = carAdvertRepository;
             _advertAssembler = advertAssembler;
             _apacheService = apacheService;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<GetAdvertByIdQueryResponse> Handle(GetAdvertByIdQueryRequest request,
             CancellationToken cancellationToken)
         {
+            var httpContext = _httpContextAccessor.HttpContext;
+            string clientIpAddress = httpContext.Connection.RemoteIpAddress.ToString();
             var advert = await _carAdvertRepository.GetAdvertByIdAsync(request.Id);
 
             if (advert == null)
@@ -39,7 +44,7 @@ namespace CarAdvertCore.Application.Features.Tasks.Queries.Handler
             }
 
             #region KafkaSend
-            await _apacheService.MapToVisitEvent(advert, "0.0.0.0");
+            await _apacheService.MapToVisitEvent(advert, clientIpAddress);
             #endregion
 
             return _advertAssembler.MapToGetAdvertByIdResponse(advert);
