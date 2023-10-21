@@ -11,18 +11,18 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using System.Data.Common;
 using System.Net.Mail;
 using CarAdvertCore.Domain.Entities;
+using Microsoft.Extensions.Configuration;
 
 namespace CarAdvertCore.Persistence.Repositories
 {
     public class BaseRepository<T> :
         IAsyncRepository<T> where T : class
     {
-        
         SqlConnection sqlcon = null;
 
-        public BaseRepository()
+        public BaseRepository(IConfiguration configuration)
         {
-            sqlcon = new SqlConnection("Server=(LocalDb)\\MSSQLLocalDb;Initial Catalog=CarAdvertCore;Integrated Security=True;\r\n");
+            sqlcon = new SqlConnection(configuration["DbConnectionString"]);
         }
 
         public virtual async Task<T> AddAsync(T entity)

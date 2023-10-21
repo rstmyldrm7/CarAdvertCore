@@ -4,6 +4,7 @@ using CarAdvertCore.Domain.Entities;
 using Confluent.Kafka;
 using Kafka.Public;
 using Kafka.Public.Loggers;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
@@ -20,21 +21,23 @@ namespace CarAdvertCore.Application.Features.Tasks.Service.Kafka
     {
         private ClusterClient _cluster;
         private readonly IVisitRepository _visitRepository;
-        public KafkaConsumerHostedService(IVisitRepository visitRepository)
+        private static string _topic;
+        public KafkaConsumerHostedService(IVisitRepository visitRepository, IConfiguration configuration)
         {
             _cluster = new ClusterClient(new Configuration
             {
-                Seeds = "localhost:9092"
+                Seeds = configuration["KafkaSettings:Server"]
             }, new ConsoleLogger());
             var config = new ProducerConfig()
             {
-                BootstrapServers = "localhost:9092"
+                BootstrapServers = configuration["KafkaSettings:Server"]
             };
             _visitRepository = visitRepository;
+            _topic = configuration["KafkaSettings:Topic"];
         }
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            _cluster.ConsumeFromLatest(topic: "demo");
+            _cluster.ConsumeFromLatest(topic: _topic);
             _cluster.MessageReceived += async record =>
             {
                 var readAsString = Encoding.UTF8.GetString(record.Value as byte[]);

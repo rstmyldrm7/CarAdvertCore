@@ -1,6 +1,7 @@
 ﻿using CarAdvertCore.Application.Features.Tasks.Service.Abstract;
 using CarAdvertCore.Domain.Entities;
 using Confluent.Kafka;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
@@ -19,13 +20,15 @@ namespace CarAdvertCore.Application.Features.Tasks.Service.Concrete
     public class ApacheService : IApacheService
     {
         private IProducer<Null, string> _producer;
-        public ApacheService()
+        private static string _topic;
+        public ApacheService(IConfiguration configuration)
         {
             var config = new ProducerConfig()
             {
-                BootstrapServers = "localhost:9092"
+                BootstrapServers = configuration["KafkaSettings:Server"]
             };
             _producer = new ProducerBuilder<Null, string>(config).Build();
+            _topic = configuration["KafkaSettings:Topic"];
         }
         public async Task MapToVisitEvent(Adverts advert, string ipAdress)
         {
@@ -46,7 +49,7 @@ namespace CarAdvertCore.Application.Features.Tasks.Service.Concrete
         private async Task ProcessVisit(Visit visitRequest)
         {
             var content = Newtonsoft.Json.JsonConvert.SerializeObject(visitRequest); 
-            await _producer.ProduceAsync(topic: "demo", new Message<Null, string>()
+            await _producer.ProduceAsync(topic: _topic, new Message<Null, string>()
             {
                 Value = content
             }, CancellationToken.None);
