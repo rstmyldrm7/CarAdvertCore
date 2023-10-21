@@ -5,6 +5,8 @@ using CarAdvertCore.Application.Contracts.Persistence;
 using CarAdvertCore.Persistence.Repositories;
 using CarAdvertCore.Application.Assembler.Abstract;
 using CarAdvertCore.Application.Assembler.Concrete;
+using CarAdvertCore.Application.Features.Tasks.Service.Abstract;
+using CarAdvertCore.Application.Features.Tasks.Service.Concrete;
 
 namespace CarAdvertCore.Persistence
 {
@@ -15,7 +17,9 @@ namespace CarAdvertCore.Persistence
         {
             services.AddScoped(typeof(IAsyncRepository<>), typeof(BaseRepository<>));
             services.AddScoped<ICarAdvertRepository, CarAdvertRepository>();
+            services.AddSingleton<IVisitRepository, VisitRepository>();
             services.AddScoped<IAdvertAssembler, AdvertAssembler>();
+            services.AddScoped<IApacheService, ApacheService>();
 
             return services;
         }

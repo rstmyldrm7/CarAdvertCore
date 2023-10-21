@@ -7,6 +7,7 @@ using CarAdvertCore.Application.Contracts.Persistence;
 using CarAdvertCore.Domain.Entities;
 using Microsoft.Data.SqlClient;
 using Dapper;
+using Microsoft.Extensions.Configuration;
 
 namespace CarAdvertCore.Persistence.Repositories
 {
@@ -14,9 +15,9 @@ namespace CarAdvertCore.Persistence.Repositories
     {
         SqlConnection sqlcon = null;
 
-        public CarAdvertRepository()
+        public CarAdvertRepository(IConfiguration configuration) : base(configuration)
         {
-            sqlcon = new SqlConnection("Server=(LocalDb)\\MSSQLLocalDb;Initial Catalog=CarAdvertCore;Integrated Security=True;\r\n");
+            sqlcon = new SqlConnection(configuration["DbConnectionString"]);
         }
 
         public async Task<Adverts> GetAdvertByIdAsync(long id)

@@ -23,6 +23,7 @@ namespace CarAdvertCore.Api
         {
             services.AddApplicationServices();
             services.AddPersistenceServices(Configuration);
+            services.AddHttpContextAccessor();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
