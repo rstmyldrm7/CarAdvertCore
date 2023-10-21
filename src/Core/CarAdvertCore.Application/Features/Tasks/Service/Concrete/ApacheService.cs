@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http.Json;
 using System.Reflection;
 using System.Text;
 using System.Text.Json;
@@ -44,9 +45,10 @@ namespace CarAdvertCore.Application.Features.Tasks.Service.Concrete
         }
         private async Task ProcessVisit(Visit visitRequest)
         {
+            var content = Newtonsoft.Json.JsonConvert.SerializeObject(visitRequest); 
             await _producer.ProduceAsync(topic: "demo", new Message<Null, string>()
             {
-                Value = visitRequest.ToString()
+                Value = content
             }, CancellationToken.None);
         }
     }

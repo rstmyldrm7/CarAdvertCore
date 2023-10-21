@@ -17,7 +17,7 @@ namespace CarAdvertCore.Persistence
         {
             services.AddScoped(typeof(IAsyncRepository<>), typeof(BaseRepository<>));
             services.AddScoped<ICarAdvertRepository, CarAdvertRepository>();
-            services.AddScoped<IVisitRepository, VisitRepository>();
+            services.AddSingleton<IVisitRepository, VisitRepository>();
             services.AddScoped<IAdvertAssembler, AdvertAssembler>();
             services.AddScoped<IApacheService, ApacheService>();
 

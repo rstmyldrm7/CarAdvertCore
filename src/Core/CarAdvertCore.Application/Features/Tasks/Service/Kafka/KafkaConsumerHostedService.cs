@@ -1,4 +1,5 @@
-﻿using CarAdvertCore.Application.Features.Tasks.Service.Abstract;
+﻿using CarAdvertCore.Application.Contracts.Persistence;
+using CarAdvertCore.Application.Features.Tasks.Service.Abstract;
 using CarAdvertCore.Domain.Entities;
 using Confluent.Kafka;
 using Kafka.Public;
@@ -9,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -16,11 +18,10 @@ namespace CarAdvertCore.Application.Features.Tasks.Service.Kafka
 {
     public class KafkaConsumerHostedService : IHostedService
     {
-        private readonly ILogger<KafkaConsumerHostedService> _logger;
         private ClusterClient _cluster;
-        public KafkaConsumerHostedService(ILogger<KafkaConsumerHostedService> logger)
+        private readonly IVisitRepository _visitRepository;
+        public KafkaConsumerHostedService(IVisitRepository visitRepository)
         {
-            _logger = logger;
             _cluster = new ClusterClient(new Configuration
             {
                 Seeds = "localhost:9092"
@@ -29,15 +30,21 @@ namespace CarAdvertCore.Application.Features.Tasks.Service.Kafka
             {
                 BootstrapServers = "localhost:9092"
             };
+            _visitRepository = visitRepository;
         }
         public Task StartAsync(CancellationToken cancellationToken)
         {
             _cluster.ConsumeFromLatest(topic: "demo");
             _cluster.MessageReceived += async record =>
             {
-                _logger.LogInformation($"Received:{Encoding.UTF8.GetString(record.Value as byte[])}");
+                var readAsString = Encoding.UTF8.GetString(record.Value as byte[]);
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                };
+                var visit = JsonSerializer.Deserialize<Visit>(readAsString, options);
+                await _visitRepository.AddAsync(visit);
             };
-
             return Task.CompletedTask;
         }
 
