@@ -1,23 +1,23 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31624.102
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34202.233
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{7451C4E2-545E-4608-9E28-3619AEC0E858}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{B142BD80-2B28-4DB6-9491-185640BF7FB0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarAdvertCore.Api", "src\API\CarAdvertCore.Api\CarAdvertCore.Api.csproj", "{CA6788B4-347E-403D-AEE7-F777C48BD398}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarAdvertCore.Api", "src\API\CarAdvertCore.Api\CarAdvertCore.Api.csproj", "{CA6788B4-347E-403D-AEE7-F777C48BD398}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{DCA2FBD0-F7A0-4829-817B-BD5402D8C603}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarAdvertCore.Application", "src\Core\CarAdvertCore.Application\CarAdvertCore.Application.csproj", "{83C66758-A9C4-4EF5-BCDD-6982DCAF2B94}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarAdvertCore.Application", "src\Core\CarAdvertCore.Application\CarAdvertCore.Application.csproj", "{83C66758-A9C4-4EF5-BCDD-6982DCAF2B94}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarAdvertCore.Domain", "src\Core\CarAdvertCore.Domain\CarAdvertCore.Domain.csproj", "{4D9B7EAE-FC34-4F1E-AA08-36BA9B872B7B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarAdvertCore.Domain", "src\Core\CarAdvertCore.Domain\CarAdvertCore.Domain.csproj", "{4D9B7EAE-FC34-4F1E-AA08-36BA9B872B7B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{D7BF061A-36E9-43CE-9C88-DAB35ED00F0C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarAdvertCore.Persistence", "src\Infrastructure\CarAdvertCore.Persistence\CarAdvertCore.Persistence.csproj", "{4A414CBC-D377-470B-BF34-74D873358697}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarAdvertCore.Persistence", "src\Infrastructure\CarAdvertCore.Persistence\CarAdvertCore.Persistence.csproj", "{4A414CBC-D377-470B-BF34-74D873358697}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,0 +1,32 @@
+version: '3.8'
+services:
+  serene_bhaskara:
+    image: rustemy14/caradvertcoreapi
+    ports:
+      - "8080:80" 
+    depends_on:
+      - kafka
+      - cool-mayer
+
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+    depends_on:
+      - zookeeper
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    ports:
+      - "2181:2181"
+
+  cool-mayer:
+    image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
+    environment:
+      SA_PASSWORD: P@ssw0rd2019
+      ACCEPT_EULA: Y
+    ports:
+      - "1433:1433"
