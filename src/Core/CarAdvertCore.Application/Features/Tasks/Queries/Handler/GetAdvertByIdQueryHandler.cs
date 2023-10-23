@@ -44,7 +44,7 @@ namespace CarAdvertCore.Application.Features.Tasks.Queries.Handler
             }
 
             #region KafkaSend
-            await _apacheService.MapToVisitEvent(advert, clientIpAddress);
+            _apacheService.MapToVisitEvent(advert, clientIpAddress);
             #endregion
 
             return _advertAssembler.MapToGetAdvertByIdResponse(advert);
