@@ -18,13 +18,13 @@ Before you start, ensure you have the following prerequisites installed:
 
 ## Docker Setup
 
-1. Clone this repository to your local machine.
+#### Clone this repository to your local machine.
 open the command shell -> git clone <(https://github.com/rstmyldrm7/CarAdvertCore.git>
 
-2. Change your working directory to the project folder.
+#### Change your working directory to the project folder.
 -> cd CarAdvertCore
 
-3.Build the Docker containers for your web API, database, and Kafka by running the following command:
+#### Build the Docker containers for your web API, database, and Kafka by running the following command:
 -> docker-compose up --build -d
 
 This command will build and start the Docker containers for your project, including the web API, the chosen database, and Apache Kafka.
@@ -37,12 +37,12 @@ The API is accessible at http://localhost:8080
 
 ## Endpoints
 
-Endpoint 1: Query Adverts
+#### Endpoint 1: Query Adverts
 URL: /advert/all
 HTTP Method: GET
-Example : 
 Filtering Fields:  categoryId, price, gear, fuel, page
 Sorting Fields: price, year, km
+SampleRequestExample : https://localhost:8080/advert/all?filteringFields.categoryId=14578&filteringFields.PriceFrom=50&filteringFields.PriceTo=150&filteringFields.gears=0&filteringFields.gears=1&filteringFields.fuel=0&filteringFields.fuel=1&Field=0&Direction=0&PageSize=1&PageNumber=10
 
 Sample Response:
 
@@ -62,10 +62,10 @@ json
   ]
 }
 
-Endpoint 2: Query Adverts
+#### Endpoint 2: Query Adverts
 URL: /advert/get
 HTTP Method: GET
-Example : 
+SampleRequestExample : http://localhost:8080/advert/get?Id=11600515
 Filtering Fields:  categoryId, price, gear, fuel, page
 Sorting Fields: price, year, km
 
@@ -78,7 +78,7 @@ json
   // ... (advert details)
 }
 
-Endpoint 3: Record IP Visits
+#### Endpoint 3: Record IP Visits
 
 - URL: /advert/visit
 - HTTP Method: POST
