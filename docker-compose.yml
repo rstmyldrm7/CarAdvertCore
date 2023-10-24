@@ -1,15 +1,21 @@
 version: '3.8'
+
+volumes:
+  sqlserver_data:
+
 services:
-  serene_bhaskara:
+  caradvertcoreProject:
     image: rustemy14/caradvertcoreapi
+    container_name: caradvertcoreProject
     ports:
-      - "8080:80" 
+      - "8080:80"
     depends_on:
       - kafka
-      - cool-mayer
+      - sqlserver
 
   kafka:
     image: confluentinc/cp-kafka:latest
+    container_name: kafka
     ports:
       - "9092:9092"
     environment:
@@ -20,13 +26,37 @@ services:
 
   zookeeper:
     image: confluentinc/cp-zookeeper:latest
+    container_name: zookeeper
     ports:
       - "2181:2181"
 
-  cool-mayer:
-    image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: sqlserver
     environment:
       SA_PASSWORD: P@ssw0rd2019
       ACCEPT_EULA: Y
     ports:
       - "1433:1433"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P $${SA_PASSWORD:P@ssw0rd2019} -Q 'SELECT 1' || exit 1"]
+      interval: 10s
+      retries: 10
+      start_period: 10s
+      timeout: 3s
+
+  sqlserver.configurator:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    volumes:
+      - ./init:/docker-entrypoint-initdb.d
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    command: >
+      bash -c '
+      /opt/mssql-tools/bin/sqlcmd -S sqlserver -U sa -P ${SA_PASSWORD:-password123} -d master -i docker-entrypoint-initdb.d/init.sql;
+      echo "All done!";
+      '
